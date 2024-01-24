@@ -1,0 +1,27 @@
+﻿@page
+@model WebAppRazorPages.Pages.UsersModel
+@{
+    ViewData["Title"] = "Users page";
+}
+
+<h1>Страница Пользователи</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>e-mail</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(var user in Model.users)
+    {
+        <tr>
+            <td><a href="EditUser?id=@user.Id">@user.Id</a></td>
+            <td>@user.Name</td>
+            <td>@user.Email</td>
+        </tr>
+    }
+    </tbody>
+</table>

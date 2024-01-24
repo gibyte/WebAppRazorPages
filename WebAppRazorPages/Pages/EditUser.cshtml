@@ -1,0 +1,12 @@
+﻿@page
+@model WebAppRazorPages.Pages.EditUserModel
+@{
+}
+
+<form method="post">
+    <p>ID: @Model?.User?.Id</p>
+    <label for="Name">Имя впользователя</label><input type="text" id="Name" name="Name"><span asp-validation-for="Name"></span>
+    <h1></h1>
+    <label for="Email">e-mail</label><input type="text" id="Email" name="Email"><span asp-validation-for="Email"></span>
+    <button type="submit">Сохранить</button>
+</form>
