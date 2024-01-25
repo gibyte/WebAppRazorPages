@@ -2,7 +2,7 @@
 
 namespace WebAppRazorPages.Controller
 {
-    public class UserController
+    public class UserController : IUserController
     {
         private List<User> _users;
         public UserController() 

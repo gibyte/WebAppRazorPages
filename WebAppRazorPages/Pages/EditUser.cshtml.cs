@@ -7,7 +7,13 @@ namespace WebAppRazorPages.Pages
 {
     public class EditUserModel : PageModel
     {
-        private UserController _userController = new();
+
+        public EditUserModel(IUserController userController)
+        {
+            _userController = userController;
+        }
+
+        private IUserController _userController;
         public User? User { get; set; }
 
         public string? Email { get; set; }
@@ -16,12 +22,13 @@ namespace WebAppRazorPages.Pages
         public IActionResult OnGet(int id)
         {
             User = _userController.GetUserById(id);
-            if (User == null) return NotFound();
+            User ??= new();
             return Page();
         }
 
         public IActionResult OnPost(User? userForm)
         {
+            
             var userDB = _userController.UpdateUser(userForm);
             if (userDB == null) return NotFound();
             return Page();

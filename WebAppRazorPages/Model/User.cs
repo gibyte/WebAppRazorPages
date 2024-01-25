@@ -9,11 +9,13 @@ namespace WebAppRazorPages.Model
         public string Name { get; set; }
         [Required(ErrorMessage = "Введите адрес электронной почты")]
         public string Email { get; set; }
+        public string LastName { get; set; }
 
         public User() 
         { 
             Name ??= string.Empty;
             Email ??= string.Empty;
+            LastName ??= string.Empty;
         }
     }
 }

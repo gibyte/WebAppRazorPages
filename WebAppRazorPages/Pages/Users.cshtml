@@ -5,7 +5,7 @@
 }
 
 <h1>Страница Пользователи</h1>
-
+<a asp-page="EditUser" class="btn btn-primary stretched-link">Создать</a>
 <table>
     <thead>
         <tr>
@@ -18,7 +18,7 @@
     @foreach(var user in Model.users)
     {
         <tr>
-            <td><a href="EditUser?id=@user.Id">@user.Id</a></td>
+            <td><a href="EditUser?id="+@user.Id>@user.Id</a></td>
             <td>@user.Name</td>
             <td>@user.Email</td>
         </tr>

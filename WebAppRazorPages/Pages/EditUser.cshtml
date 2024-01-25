@@ -5,8 +5,10 @@
 
 <form method="post">
     <p>ID: @Model?.User?.Id</p>
-    <label for="Name">Имя впользователя</label><input type="text" id="Name" name="Name"><span asp-validation-for="Name"></span>
+    <label for="Name">Имя пользователя</label>
+    <input asp-for="User.Name" type="text" id="Name" name="Name"><span asp-validation-for="Name"></span>
     <h1></h1>
-    <label for="Email">e-mail</label><input type="text" id="Email" name="Email"><span asp-validation-for="Email"></span>
+    <label for="Email">e-mail</label>
+    <input  asp-for="User.Email" type="text" id="Email" name="Email"><span asp-validation-for="Email"></span>
     <button type="submit">Сохранить</button>
 </form>
