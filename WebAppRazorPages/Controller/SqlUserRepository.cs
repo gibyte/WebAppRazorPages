@@ -1,13 +1,12 @@
-﻿using System.Collections.Immutable;
-using WebAppRazorPages.Model;
+﻿using WebAppRazorPages.Model;
 
 namespace WebAppRazorPages.Controller
 {
-    public class SqlUserController : IUserController
+    public class SqlUserRepository : IUserRepository
     {
         private readonly AppDbContext _appDbContext;
 
-        public SqlUserController(AppDbContext appDbContext)
+        public SqlUserRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }

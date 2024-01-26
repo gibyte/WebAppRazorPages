@@ -7,15 +7,15 @@ namespace WebAppRazorPages.Pages
 {
     public class UsersModel : PageModel
     {
-        public UsersModel(IUserController userController) 
+        public UsersModel(IUserRepository userRepository) 
         {
-            _userController = userController;
+            _userRepository = userRepository;
         }
-        private IUserController _userController;
+        private IUserRepository _userRepository;
         public List<User> users { get; set; }
         public IActionResult OnGet()
         {
-            users = _userController.GetUsers();
+            users = _userRepository.GetUsers();
             return Page();
         }
     }

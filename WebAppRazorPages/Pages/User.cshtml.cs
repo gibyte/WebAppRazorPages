@@ -7,16 +7,15 @@ namespace WebAppRazorPages.Pages
 {
     public class UserModel : PageModel
     {
-
-        public UserModel(IUserController userController)
+        public UserModel(IUserRepository userRepository)
         {
-            _userController = userController;
+            _userRepository = userRepository;
         }
-        private IUserController _userController;
+        private IUserRepository _userRepository;
         public User? User { get; set; }
         public IActionResult OnGet(int id = 1) 
         {
-            User = _userController.GetUserById(id); // запрашиваем у контроллера пользователся и id из параметра
+            User = _userRepository.GetUserById(id); // запрашиваем у контроллера пользователся и id из параметра
             if (User == null) return NotFound(); // если пользватель не нашелся выкидываем ошибку HTTP 404
             return Page(); // выводим страницу пользователя
         }

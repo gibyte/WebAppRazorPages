@@ -16,7 +16,7 @@ builder.Services.AddDbContextPool<AppDbContext>(options =>
 {
     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
 });
-builder.Services.AddScoped<IUserController, SqlUserController>();
+builder.Services.AddScoped<IUserRepository, SqlUserRepository>();
 
 var app = builder.Build();
 

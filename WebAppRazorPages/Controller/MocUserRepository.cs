@@ -2,10 +2,10 @@
 
 namespace WebAppRazorPages.Controller
 {
-    public class UserController : IUserController
+    public class MocUserRepository : IUserRepository
     {
         private List<User> _users;
-        public UserController() 
+        public MocUserRepository() 
         { 
             _users ??= new List<User>();
             _users.Add(new() { Id = 1, Name = "Первый", Email = "first@first.ru" });
