@@ -18,5 +18,16 @@ namespace WebAppRazorPages.Pages
             users = _userRepository.GetUsers();
             return Page();
         }
+        public IActionResult OnPost()
+        {
+            return Page();
+        }
+
+        public IActionResult OnPostDelete(int id)
+        {
+            _userRepository.DeleteUser(id);
+            return RedirectToPage();
+        }
+
     }
 }

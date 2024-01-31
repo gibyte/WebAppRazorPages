@@ -11,6 +11,14 @@ namespace WebAppRazorPages.Controller
             _appDbContext = appDbContext;
         }
 
+        public User DeleteUser(int id)
+        {
+            var user = GetUserById(id);
+            _appDbContext.Remove(user);
+            _appDbContext.SaveChanges();
+            return user;
+        }
+
         public User? GetUserById(int id)
         {
             return _appDbContext.Users.Where( u => u.Id == id).ToList().FirstOrDefault();

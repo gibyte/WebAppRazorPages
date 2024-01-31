@@ -4,24 +4,51 @@
     ViewData["Title"] = "Users page";
 }
 
-<h1>Страница Пользователи</h1>
-<a asp-page="EditUser" class="btn btn-primary stretched-link">Создать</a>
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>e-mail</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach(var user in Model.users)
-    {
-        <tr>
-            <td><a href="EditUser?id="+@user.Id>@user.Id</a></td>
-            <td>@user.Name</td>
-            <td>@user.Email</td>
-        </tr>
-    }
-    </tbody>
-</table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Страница Пользователи</title>
+    <!-- Подключение Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Дополнительные стили */
+        body {
+            padding: 20px;
+        }
+
+        .user-card {
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+  
+</head>
+<body>
+    <div class="container">
+        <h1>Страница Пользователи</h1>
+        <a asp-page="EditUser" class="btn btn-primary btn-create mb-3">Создать</a>
+        <div class="row">
+            @foreach (var user in Model.users)
+            {
+                <div class="col-md-3">
+                    <div class="user-card">
+                        <p><strong>ID:</strong>@user.Id</p>
+                        <p><strong>Name:</strong> @user.Name</p>
+                        <p><strong>Email:</strong> @user.Email</p>
+                        <div class="btn-group" role="group">
+                            <a asp-page="EditUser" asp-page="EditUser" asp-route-id="@user.Id" class="btn btn-secondary">Редактировать</a>
+                            <form asp-page-handler="delete" method="post" asp-route-id="@user.Id" class="delete-form">
+                                <button type="button" class="btn btn-danger delete-button">Удалить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>
