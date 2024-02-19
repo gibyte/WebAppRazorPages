@@ -40,7 +40,7 @@
                         <p><strong>Name:</strong> @user.Name</p>
                         <p><strong>Email:</strong> @user.Email</p>
                         <div class="btn-group" role="group">
-                            <a asp-page="EditUser" asp-page="EditUser" asp-route-id="@user.Id" class="btn btn-secondary">Редактировать</a>
+                            <a asp-page="EditUser" asp-route-id="@user.Id" class="btn btn-secondary">Редактировать</a>
                             <form asp-page-handler="delete" method="post" asp-route-id="@user.Id" class="delete-form">
                                 <button type="button" class="btn btn-danger delete-button">Удалить</button>
                             </form>

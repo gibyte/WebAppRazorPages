@@ -12,11 +12,11 @@ builder.Services.AddRazorPages();
 
 ConfigurationManager configuration = builder.Configuration;
 
-//builder.Services.AddDbContextPool<AppDbContext>(options =>
-//{
-//    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-//});
-builder.Services.AddScoped<IUserRepository, MocUserRepository>();
+builder.Services.AddDbContextPool<AppDbContext>(options =>
+{
+    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+});
+builder.Services.AddScoped<IUserRepository, SqlUserRepository>();
 
 var app = builder.Build();
 
