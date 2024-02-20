@@ -1,7 +1,7 @@
 ﻿@page
-@model WebAppRazorPages.Pages.UsersModel
+@model WebAppRazorPages.Pages.StudentsModel
 @{
-    ViewData["Title"] = "Users page";
+    ViewData["Title"] = "Students page";
 }
 
 <!DOCTYPE html>
@@ -9,7 +9,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Страница Пользователи</title>
     <!-- Подключение Bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -29,19 +28,18 @@
 </head>
 <body>
     <div class="container">
-        <h1>Страница Пользователи</h1>
-        <a asp-page="EditUser" class="btn btn-primary btn-create mb-3">Создать</a>
+        <a asp-page="EditStudent" class="btn btn-primary btn-create mb-3">Создать</a>
         <div class="row">
-            @foreach (var user in Model.users)
+            @foreach (var student in Model.Students)
             {
                 <div class="col-md-3">
                     <div class="user-card">
-                        <p><strong>ID:</strong>@user.Id</p>
-                        <p><strong>Name:</strong> @user.Name</p>
-                        <p><strong>Email:</strong> @user.Email</p>
+                        <p><strong>ID:</strong> @student.Id</p>
+                        <p><strong>Name:</strong> @student.Name</p>
+                        <p><strong>Email:</strong> @student.Email</p>
                         <div class="btn-group" role="group">
-                            <a asp-page="EditUser" asp-route-id="@user.Id" class="btn btn-secondary">Редактировать</a>
-                            <form asp-page-handler="delete" method="post" asp-route-id="@user.Id" class="delete-form">
+                            <a asp-page="EditStudent" asp-route-id="@student.Id" class="btn btn-secondary">Редактировать</a>
+                            <form asp-page-handler="delete" method="post" asp-route-id="@student.Id" class="delete-form">
                                 <button type="button" class="btn btn-danger delete-button">Удалить</button>
                             </form>
                         </div>

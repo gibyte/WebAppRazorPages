@@ -2,7 +2,7 @@
 
 namespace WebAppRazorPages.Model
 {
-    public class User
+    public class Student
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Введите имя пользователя")]
@@ -11,7 +11,7 @@ namespace WebAppRazorPages.Model
         public string Email { get; set; }
         public string LastName { get; set; }
         public List<SubjectGrade> SubjectGrades { get; set; }
-        public User() 
+        public Student() 
         { 
             Name ??= string.Empty;
             Email ??= string.Empty;

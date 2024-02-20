@@ -1,21 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WebAppRazorPages.Controller;
 using WebAppRazorPages.Model;
+using WebAppRazorPages.Repository;
 
 namespace WebAppRazorPages.Pages
 {
-    public class UsersModel : PageModel
+    public class StudentsModel : PageModel
     {
-        public UsersModel(IUserRepository userRepository) 
+        public StudentsModel(IStudentRepository studentRepository) 
         {
-            _userRepository = userRepository;
+            _studentRepository = studentRepository;
         }
-        private IUserRepository _userRepository;
-        public List<User> users { get; set; }
+        private IStudentRepository _studentRepository;
+        public List<Student> Students { get; set; }
         public IActionResult OnGet()
         {
-            users = _userRepository.GetUsers();
+            Students = _studentRepository.GetUsers();
             return Page();
         }
         public IActionResult OnPost()
@@ -25,7 +25,7 @@ namespace WebAppRazorPages.Pages
 
         public IActionResult OnPostDelete(int id)
         {
-            _userRepository.DeleteUser(id);
+            _studentRepository.DeleteUser(id);
             return RedirectToPage();
         }
 
