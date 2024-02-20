@@ -7,8 +7,6 @@
         <div class="col-md-6">
             <h2>Вход на сайт</h2>
 
-            <a href="/Account/Register" class="btn btn-primary btn-create mb-3">Регистрация</a>
-
             <form method="post" asp-action="Login" asp-controller="Account">
                 <div class="validation" asp-validation-summary="ModelOnly"></div>
                 <div>
@@ -23,7 +21,8 @@
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Войти" class="btn btn-outline-dark" />
+                        <input type="submit" value="Войти" class="btn btn-success" />
+                        <a href="/Account/Register" class="btn btn-primary btn-create ml-2">Регистрация</a>
                     </div>
                 </div>
             </form>

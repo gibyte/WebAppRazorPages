@@ -29,6 +29,23 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Students">Студенты</a>
                         </li>
                     </ul>
+                        <!-- Кнопка входа и выхода -->
+                        <div class="text-right ml-auto mr-3">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <form asp-controller="Account" asp-action="Logout" method="post" class="form-inline">
+                                <span class="navbar-text mr-3">Привет, @User.Identity.Name!</span>
+                                <button type="submit" class="btn btn-link text-dark">Выход</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-controller="Account" asp-action="Login" class="btn btn-link text-dark">Вход</a>
+                        }
+                        </div>
+                        <!-- Кнопка входа и выхода -->
+
+                    
                 </div>
             </div>
         </nav>
@@ -48,7 +65,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <!-- Подключение скриптов валидации из _ValidationScriptsPartial.cshtml -->
+    <partial name="_ValidationScriptsPartial" />
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
