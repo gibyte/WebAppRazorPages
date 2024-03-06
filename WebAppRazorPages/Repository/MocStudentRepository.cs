@@ -8,6 +8,7 @@ namespace WebAppRazorPages.Repository
         public MocStudentRepository() 
         {
             _students ??= new List<Student>();
+            /*
             List<SubjectGrade> subjectGrade = new() 
             { 
                 new SubjectGrade { Name = "Математика", Grade = 5 },
@@ -18,6 +19,7 @@ namespace WebAppRazorPages.Repository
             _students.Add(new() { Id = 1, Name = "Первый", Email = "first@first.ru" , SubjectGrades = subjectGrade });
             _students.Add(new() { Id = 2, Name = "Второй", Email = "first@first.ru" });
             _students.Add(new() { Id = 3, Name = "Третий", Email = "first@first.ru" });
+            */
         }
 
         public Student DeleteUser(int id)

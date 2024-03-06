@@ -1,0 +1,36 @@
+﻿@page
+@model WebAppRazorPages.Pages.GradeInputModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Grade</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2>Add Grade</h2>
+                <form method="post">
+                    <div class="form-group">
+                        <label for="student">Student:</label>
+                        <select class="form-control" id="student" asp-for="StudentId" asp-items="Model.StudentOptions"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject:</label>
+                        <select class="form-control" id="subject" asp-for="SubjectId" asp-items="Model.SubjectOptions"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="grade">Grade:</label>
+                        <input type="number" class="form-control" id="grade" asp-for="Grade" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Grade</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

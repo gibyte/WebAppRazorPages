@@ -38,7 +38,7 @@
                         <p><strong>Name:</strong> @student.Name</p>
                         <p><strong>Email:</strong> @student.Email</p>
                         <div class="btn-group" role="group">
-                            <a asp-page="EditStudent" asp-route-id="@student.Id" class="btn btn-secondary">Редактировать</a>
+                            <a asp-page="Student" asp-route-id="@student.Id" class="btn btn-secondary">Открыть</a>
                             <form asp-page-handler="delete" method="post" asp-route-id="@student.Id" class="delete-form">
                                 <button type="button" class="btn btn-danger delete-button">Удалить</button>
                             </form>

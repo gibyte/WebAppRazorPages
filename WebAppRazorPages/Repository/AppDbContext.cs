@@ -14,5 +14,8 @@ namespace WebAppRazorPages.Repository
 
         public DbSet<Student>? Students { get; set; }
         public DbSet<AuthUser>? AuthUsers { get; set; }
+        public DbSet<SubjectGrade>? SubjectGrades { get; set; }
+        public DbSet<Subject>? Subjects { get; set; }
+
     }
 }

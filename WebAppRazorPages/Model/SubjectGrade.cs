@@ -3,7 +3,7 @@
     public class SubjectGrade
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public Subject Subject { get; set; }
         public int Grade {  get; set; }
     }
 }

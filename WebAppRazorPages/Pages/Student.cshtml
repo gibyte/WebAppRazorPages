@@ -1,7 +1,5 @@
 ﻿@page
 @model WebAppRazorPages.Pages.StudentModel
-@{
-}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,25 +9,76 @@
     <title>Свойства пользователя</title>
     <!-- Подключение Bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Дополнительные стили */
-        body {
-            padding: 20px;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        p {
-            margin-bottom: 10px;
-        }
-    </style>
 </head>
 <body>
-    <h1>Свойства пользователя</h1>
-    <p>User ID: @Model.Student.Id</p>
-    <p>Name: @Model.Student.Name</p>
-    <p>Email: @Model.Student.Email</p>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="card-title">Свойства пользователя</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="userId">User ID:</label>
+                            <p class="form-control" id="userId">@Model.Student.Id</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="userName">Name:</label>
+                            <p class="form-control" id="userName">@Model.Student.Name</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="userEmail">Email:</label>
+                            <p class="form-control" id="userEmail">@Model.Student.Email</p>
+                        </div>
+                        <div class="form-group">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Подключение библиотеки Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Получение данных для графика из модели
+        var subjects = @Html.Raw(Json.Serialize(Model.Student.SubjectGrades));
+
+        // Инициализация массивов для меток и данных
+        var labels = [];
+        var data = [];
+
+        // Заполнение массивов данными из модели
+        subjects.forEach(function (subject) {
+            labels.push(subject.name);
+            data.push(subject.grade);
+        });
+
+        // Создание графика
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'График успеваемости студента',
+                    data: data,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
