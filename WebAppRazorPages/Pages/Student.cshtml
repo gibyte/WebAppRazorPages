@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Свойства пользователя</title>
+    <title>Информация о студенте</title>
     <!-- Подключение Bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -32,14 +32,46 @@
                             <p class="form-control" id="userEmail">@Model.Student.Email</p>
                         </div>
                         <div class="form-group">
+                            <a href="/GradeInput?studentId=@Model.Student.Id" class="btn btn-primary">Добавить оценку</a>
+                        </div>
+                        <div class="form-group">
                             <canvas id="myChart"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="card-title">Журнал оценок</h1>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Предмет</th>
+                                    <th>Дата</th>
+                                    <th>Оценка</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var grade in Model.Student.SubjectGrades)
+                                {
+                                    <tr>
+                                        <td>@grade.Subject.Name</td>
+                                        <td>@grade.Date.ToString("dd.MM.yyyy")</td>
+                                        <td>@grade.Grade</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-
 
     <!-- Подключение библиотеки Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -47,15 +79,48 @@
         // Получение данных для графика из модели
         var subjects = @Html.Raw(Json.Serialize(Model.Student.SubjectGrades));
 
-        // Инициализация массивов для меток и данных
+        // Инициализация массивов для меток, данных и средних оценок
         var labels = [];
         var data = [];
+        var colors = [];
+        var averageGrades = [];
 
-        // Заполнение массивов данными из модели
+        // Заполнение массивов данными из модели и вычисление средних оценок
         subjects.forEach(function (subject) {
-            labels.push(subject.name);
+            labels.push(subject.subject.name);
+            //if (!labels.includes(subject.subject.name)) {
+            //    labels.push(subject.subject.name);
+            //}
             data.push(subject.grade);
+            colors.push(getColor(subject.grade));
+            averageGrades.push(calculateAverage(subject.subject.name));
         });
+
+        // Функция для определения цвета в зависимости от оценки
+        function getColor(grade) {
+            if (grade <= 2) {
+                return 'rgba(255, 99, 132, 0.2)'; // Красный
+            } else if (grade === 3) {
+                return 'rgba(255, 205, 86, 0.2)'; // Желтый
+            } else if (grade === 4) {
+                return 'rgba(54, 162, 235, 0.2)'; // Синий
+            } else {
+                return 'rgba(75, 192, 192, 0.2)'; // Зеленый
+            }
+        }
+
+        // Функция для вычисления средней оценки по предмету
+        function calculateAverage(subjectName) {
+            var totalGrade = 0;
+            var count = 0;
+            subjects.forEach(function (subject) {
+                if (subject.subject.name === subjectName) {
+                    totalGrade += subject.grade;
+                    count++;
+                }
+            });
+            return count > 0 ? (totalGrade / count).toFixed(2) : 0;
+        }
 
         // Создание графика
         var ctx = document.getElementById('myChart').getContext('2d');
@@ -64,10 +129,10 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'График успеваемости студента',
-                    data: data,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
+                    label: 'Средняя оценка',
+                    data: averageGrades,
+                    backgroundColor: colors,
+                    borderColor: colors.map(color => color.replace(/,\s*0\.2\)/, ', 1)')),
                     borderWidth: 1
                 }]
             },
@@ -80,5 +145,6 @@
             }
         });
     </script>
+
 </body>
 </html>

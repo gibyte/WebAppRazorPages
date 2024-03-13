@@ -6,31 +6,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Grade</title>
+    <title>Ввод оценки студента</title>
+    <!-- Подключение Bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <h2>Add Grade</h2>
-                <form method="post">
-                    <div class="form-group">
-                        <label for="student">Student:</label>
-                        <select class="form-control" id="student" asp-for="StudentId" asp-items="Model.StudentOptions"></select>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject:</label>
-                        <select class="form-control" id="subject" asp-for="SubjectId" asp-items="Model.SubjectOptions"></select>
-                    </div>
-                    <div class="form-group">
-                        <label for="grade">Grade:</label>
-                        <input type="number" class="form-control" id="grade" asp-for="Grade" />
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add Grade</button>
-                </form>
+        <h1>Ввод оценки студента</h1>
+        <form method="post">
+            <div class="form-group">
+                <label for="studentId">Имя студента:</label>
+                <input type="text" id="StudentName" name="StudentName" class="form-control" value="@Model.Student.Name" readonly />
+                <input type="hidden" id="StudentId" name="StudentId" value="@Model.Student.Id" />
+
             </div>
-        </div>
+            <div class="form-group">
+                <label asp-for="@Model.SubjectId">Выберите предмет:</label>
+                <select asp-for="@Model.SubjectId" class="form-control">
+                    <option value="">Выберите предмет</option>
+                    @foreach (var subject in Model.Subjects)
+                    {
+                        <option value="@subject.Id">@subject.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="@Model.SubjectId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="grade">Оценка:</label>
+                <input type="number" id="grade" name="grade" class="form-control" value="@Model.Grade" />
+            </div>
+            <div class="form-group">
+                <label for="date">Дата:</label>
+                <input type="date" id="date" name="date" class="form-control" value="@Model.Date.ToString("yyyy-MM-dd")" />
+            </div>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </form>
     </div>
 </body>
 </html>
+
+<script>
+    // Получение текущей даты
+    var currentDate = new Date();
+
+    // Форматирование текущей даты в формат YYYY-MM-DD
+    var formattedDate = currentDate.toISOString().split('T')[0];
+
+    // Установка значения поля даты
+    document.getElementById('date').value = formattedDate;
+</script>

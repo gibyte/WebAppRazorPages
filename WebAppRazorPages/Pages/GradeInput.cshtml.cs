@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using WebAppRazorPages.Model;
 using WebAppRazorPages.Repository;
@@ -17,39 +14,64 @@ namespace WebAppRazorPages.Pages
             _context = context;
         }
 
+        //[BindProperty]
+        //public GradeInputModel GradeInput { get; set; }
+
+        public List<Subject> Subjects { get; set; }
         [BindProperty]
         public int StudentId { get; set; }
+        public Student Student { get; set; }
 
-        [BindProperty]
-        public int SubjectId { get; set; }
+        [BindProperty] 
+        public int SubjectId {  get; set; }
+        [BindProperty] 
+        public int Grade {  get; set; }
+        [BindProperty] 
+        public DateTime Date { get; set; }
 
-        [BindProperty]
-        [Range(1, 10, ErrorMessage = "Grade must be between 1 and 10")]
-        public int Grade { get; set; }
-
-        public List<SelectListItem> StudentOptions { get; set; }
-        public List<SelectListItem> SubjectOptions { get; set; }
-
-        public void OnGet()
+        public IActionResult OnGet(int studentId)
         {
-            // Загрузка списка студентов и предметов
-            StudentOptions = _context.Students.Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Name }).ToList();
-            SubjectOptions = _context.SubjectGrades.Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Subject.Name }).ToList();
+            Student = _context.Students.FirstOrDefault(x => x.Id == studentId);
+            if (Student == null) { return NotFound(); }
+            StudentId = studentId;
+            Subjects = _context.Subjects.ToList();
+            return Page();
         }
 
         public IActionResult OnPost()
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var student = _context.Students.FirstOrDefault(s => s.Id == StudentId);
-                if (student == null) return NotFound();
-                //student.SubjectGrades.Add(new SubjectGrade { Name = SubjectId, Grade = Grade });
-                _context.SaveChanges();
-
-                // Перенаправление на страницу успеха
-                return RedirectToPage("/Success");
+                return Page();
             }
-            return Page();
+
+            // Находим студента в базе данных
+            var student = _context.Students.FirstOrDefault(s => s.Id == StudentId);
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            var subject = _context.Subjects.FirstOrDefault(s => s.Id == SubjectId);
+            if (subject == null)
+            {
+                return NotFound();
+            }
+            // Создаем новую оценку
+            var newGrade = new SubjectGrade
+            {
+                Subject = subject,
+                Grade = Grade,
+                Date = Date
+            };
+
+            // Добавляем оценку к студенту
+            student.SubjectGrades.Add(newGrade);
+
+            // Сохраняем изменения в базе данных
+            _context.SaveChanges();
+
+            return RedirectToPage("/Student", new { studentId = StudentId });
         }
     }
 }

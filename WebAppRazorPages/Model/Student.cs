@@ -16,7 +16,7 @@ namespace WebAppRazorPages.Model
             Name ??= string.Empty;
             Email ??= string.Empty;
             LastName ??= string.Empty;
-            SubjectGrades ??= new();
+            SubjectGrades ??= [];
         }
     }
 }

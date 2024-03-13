@@ -5,5 +5,6 @@
         public int Id { get; set; }
         public Subject Subject { get; set; }
         public int Grade {  get; set; }
+        public DateTime Date { get; set; }
     }
 }

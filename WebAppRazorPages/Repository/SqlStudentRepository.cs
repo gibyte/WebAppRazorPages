@@ -1,4 +1,5 @@
-﻿using WebAppRazorPages.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using WebAppRazorPages.Model;
 
 namespace WebAppRazorPages.Repository
 {
@@ -21,7 +22,7 @@ namespace WebAppRazorPages.Repository
 
         public Student? GetUserById(int id)
         {
-            return _appDbContext.Students.Where( u => u.Id == id).ToList().FirstOrDefault();
+            return _appDbContext.Students.Where( u => u.Id == id).Include(s => s.SubjectGrades).ThenInclude( s => s.Subject ).ToList().FirstOrDefault();
         }
 
         public List<Student> GetUsers()
