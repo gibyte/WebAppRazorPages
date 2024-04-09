@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using WebAppRazorPages.Hubs;
 using WebAppRazorPages.Model;
 using WebAppRazorPages.Repository;
 
@@ -9,9 +12,11 @@ namespace WebAppRazorPages.Pages
     public class GradeInputModel : PageModel
     {
         private readonly AppDbContext _context; // Замените YourDbContext на ваш контекст базы данных
-        public GradeInputModel(AppDbContext context)
+        private readonly IHubContext<ChatHub> _hubContext;
+        public GradeInputModel(AppDbContext context, IHubContext<ChatHub> hubContext)
         {
             _context = context;
+            _hubContext = hubContext;
         }
 
         //[BindProperty]
@@ -20,6 +25,7 @@ namespace WebAppRazorPages.Pages
         public List<Subject> Subjects { get; set; }
         [BindProperty]
         public int StudentId { get; set; }
+        
         public Student Student { get; set; }
 
         [BindProperty] 
@@ -47,6 +53,7 @@ namespace WebAppRazorPages.Pages
 
             // Находим студента в базе данных
             var student = _context.Students.FirstOrDefault(s => s.Id == StudentId);
+
             if (student == null)
             {
                 return NotFound();
@@ -71,6 +78,8 @@ namespace WebAppRazorPages.Pages
             // Сохраняем изменения в базе данных
             _context.SaveChanges();
 
+            _hubContext.Clients.All.SendAsync("UpDateSubjectGrades", StudentId, subject.Name, Grade);
+            //return Page();
             return RedirectToPage("/Student", new { studentId = StudentId });
         }
     }

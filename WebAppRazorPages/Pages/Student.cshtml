@@ -72,6 +72,20 @@
 
         </div>
     </div>
+    
+    <script src="~/js/signalr.min.js"></script>
+    <script>
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chathub")
+            .build();
+
+        connection.on("UpDateSubjectGrades", function (studentId, subjectName, grade) {
+            // Обновление данных на странице
+            location.reload(); // Обновить страницу полностью
+        });
+
+        connection.start();
+    </script>
 
     <!-- Подключение библиотеки Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
