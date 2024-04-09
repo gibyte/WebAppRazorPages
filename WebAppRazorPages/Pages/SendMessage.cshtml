@@ -1,0 +1,61 @@
+﻿@page
+@model WebAppRazorPages.Pages.SendMessageModel
+@{
+    ViewData["Title"] = "Отправка сообщений";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignalR Chat</title>
+    <!-- Подключение Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div id="inputForm" class="mt-3">
+                    <div class="input-group">
+                        <input type="text" id="message" class="form-control" placeholder="Введите сообщение...">
+                        <div class="input-group-append">
+                            <button id="sendBtn" class="btn btn-primary">Отправить</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="chatroom" class="mt-5">
+                    <!-- Здесь будут отображаться сообщения чата -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/signalr.min.js"></script>
+    <script>
+        const hubConnection = new signalR.HubConnectionBuilder()
+            .withUrl("/chathub")
+            .build();
+
+        hubConnection.on("Send", function (message) {
+            let elem = document.createElement("div");
+            elem.classList.add("message");
+            let time = new Date().toLocaleTimeString();
+            elem.innerHTML = `<span class="font-weight-bold">${time}</span> ${message}`;
+            document.getElementById("chatroom").appendChild(elem);
+        });
+
+        document.getElementById("sendBtn").addEventListener("click", function (e) {
+            let message = document.getElementById("message").value.trim(); // Удаление начальных и конечных пробелов
+            if (message !== "") {
+                hubConnection.invoke("Send", message);
+                document.getElementById("message").value = ""; // Очищаем поле ввода после отправки
+            } else {
+                alert("Пожалуйста, введите сообщение перед отправкой.");
+            }
+        });
+
+        hubConnection.start();
+    </script>
+</body>
+</html>

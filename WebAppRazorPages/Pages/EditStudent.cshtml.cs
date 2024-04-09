@@ -6,7 +6,7 @@ using WebAppRazorPages.Model;
 
 namespace WebAppRazorPages.Pages
 {
-    [Authorize]
+    //[Authorize]
     public class EditStudentModel : PageModel
     {
 

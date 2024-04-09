@@ -4,6 +4,7 @@
     ViewData["Title"] = "Home page";
 }
 
+@*
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,4 +16,21 @@
     <!-- Содержимое страницы -->
     <h1>Привет, мир!</h1>
 </body>
+</html>*@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTSP Video Player</title>
+</head>
+<body>
+    <h1>RTSP Video Player</h1>
+
+    <!-- Embed VLC player with RTSP stream -->
+    <embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org"
+           width="640" height="480" id="vlc" target="rtsp://192.168.130.69:554/user=admin&password=89Azedan&channel=1&stream=0.sdp" />
+</body>
 </html>
+

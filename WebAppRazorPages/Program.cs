@@ -5,11 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using WebAppRazorPages.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR(); // SignalR
 
 ConfigurationManager configuration = builder.Configuration;
 
@@ -41,17 +43,16 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-//авторизация ++
-app.UseAuthentication();
-//авторизация --
+
+app.UseAuthentication();//авторизация ++
+
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-});
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapHub<ChatHub>("/chathub"); // Маршрут для SignalR хаба
 
 app.MapRazorPages();
 
